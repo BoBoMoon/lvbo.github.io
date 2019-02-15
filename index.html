@@ -165,6 +165,70 @@
 
       <div class="body-wrap">
   
+    <article id="post-navigationBar-hidden与navigationBarHidden的区别" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/15/navigationBar-hidden与navigationBarHidden的区别/" class="article-date">
+  	<time datetime="2019-02-15T08:11:51.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/navigationBar-hidden与navigationBarHidden的区别/">navigationBar.hidden与navigationBarHidden的区别</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>navigationBar.hidden和navigationBarHidden都能隐藏导航栏，隐藏之后依然可以使用push和pop方法。但是区别是什么？</p>
+<p>一：navigationBar<br>navigationBar继承与UIView，所以navigationBar.hidden是对一个视图对象进行隐藏。<br>navigationBar.hidden=YES隐藏导航栏，左边沿滑动pop效果可使用</p>
+<pre><code>@interface UINavigationBar : UIView &lt;NSCoding,UIBarPositioning&gt; 
+</code></pre><p>二：navigationBarHidden<br>navigationBarHidden是navigationController 的一个属性，会隐藏整个navigationController。 navigationBarHidden=YES 左边沿滑动pop效果无效</p>
+<pre><code>@property(nonatomic,getter=isNavigationBarHidden) BOOL navigationBarHidden;
+- (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated; 
+- // Hide or show the navigation bar. If animated, it will transition vertically using UINavigationControllerHideShowBarDuration.
+- 
+</code></pre><h2 id="导航栏有一种pop方式，就是push到一个新界面，在新界面的屏幕最左边往右边滑动可以pop，并且新界面还可以跟着滑动的位置而位移。navigationBarHidden-YES时这种pop无法使用，navigationBar-hidden-YES时这种pop方式可以使用。"><a href="#导航栏有一种pop方式，就是push到一个新界面，在新界面的屏幕最左边往右边滑动可以pop，并且新界面还可以跟着滑动的位置而位移。navigationBarHidden-YES时这种pop无法使用，navigationBar-hidden-YES时这种pop方式可以使用。" class="headerlink" title="导航栏有一种pop方式，就是push到一个新界面，在新界面的屏幕最左边往右边滑动可以pop，并且新界面还可以跟着滑动的位置而位移。navigationBarHidden=YES时这种pop无法使用，navigationBar.hidden=YES时这种pop方式可以使用。"></a>导航栏有一种pop方式，就是push到一个新界面，在新界面的屏幕最左边往右边滑动可以pop，并且新界面还可以跟着滑动的位置而位移。navigationBarHidden=YES时这种pop无法使用，navigationBar.hidden=YES时这种pop方式可以使用。</h2>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS技巧/">iOS技巧</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-修改项目内某个控件的全局属性" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
