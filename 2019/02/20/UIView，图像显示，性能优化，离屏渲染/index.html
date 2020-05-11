@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>UIView，图像显示，性能优化，离屏渲染 | BoBo&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="UIView与CALayer事件传递与视图响应链图像显示原理UI卡顿掉帧原因滑动优化方案UI绘制原理离屏渲染   一、UIView与CALayer UIView为CALayer提供内容，以及负责处理触摸等事件，参与响应链CALayer负责显示内容contents 二、事件传递与视图响应链 :  (UIView )hitTest:(CGPoint)point withEvent:(UIEvent )">
+  <meta name="description" content="UIView与CALayer事件传递与视图响应链图像显示原理UI卡顿掉帧原因滑动优化方案UI绘制原理离屏渲染   一、UIView与CALayer UIView为CALayer提供内容，以及负责处理触摸等事件，参与响应链CALayer负责显示内容contents">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UIView，图像显示，性能优化，离屏渲染">
 <meta property="og:url" content="http://www.boboios.cn/2019/02/20/UIView%EF%BC%8C%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA%EF%BC%8C%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%8C%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/index.html">
 <meta property="og:site_name" content="BoBo&#39;Blog">
-<meta property="og:description" content="UIView与CALayer事件传递与视图响应链图像显示原理UI卡顿掉帧原因滑动优化方案UI绘制原理离屏渲染   一、UIView与CALayer UIView为CALayer提供内容，以及负责处理触摸等事件，参与响应链CALayer负责显示内容contents 二、事件传递与视图响应链 :  (UIView )hitTest:(CGPoint)point withEvent:(UIEvent )">
+<meta property="og:description" content="UIView与CALayer事件传递与视图响应链图像显示原理UI卡顿掉帧原因滑动优化方案UI绘制原理离屏渲染   一、UIView与CALayer UIView为CALayer提供内容，以及负责处理触摸等事件，参与响应链CALayer负责显示内容contents">
 <meta property="article:published_time" content="2019-02-20T08:20:15.000Z">
-<meta property="article:modified_time" content="2020-05-11T09:00:02.287Z">
+<meta property="article:modified_time" content="2020-05-11T09:22:02.873Z">
 <meta property="article:author" content="Lv Bo">
 <meta property="article:tag" content="iOS知识及原理">
 <meta name="twitter:card" content="summary">
@@ -206,14 +206,9 @@
       
         <p>UIView与CALayer<br>事件传递与视图响应链<br>图像显示原理<br>UI卡顿掉帧原因<br>滑动优化方案<br>UI绘制原理<br>离屏渲染  </p>
 <p>一、UIView与CALayer</p>
-<p>UIView为CALayer提供内容，以及负责处理触摸等事件，参与响应链<br>CALayer负责显示内容contents</p>
+<p>UIView为CALayer提供内容，以及负责处理触摸等事件，参与响应链<br>CALayer负责显示内容contents <a id="more"></a> </p>
 <p>二、事件传递与视图响应链 :</p>
-<ul>
-<li><p>(UIView <em>)hitTest:(CGPoint)point withEvent:(UIEvent </em>)event;</p>
-</li>
-<li><p>(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event;</p>
-</li>
-</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event;</span><br><span class="line"></span><br><span class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event;</span><br></pre></td></tr></table></figure>
 <p>如果事件一直传递到UIAppliction还是没处理，那就会忽略掉</p>
 <p>三、图像显示原理</p>
 <p>1.CPU:输出位图<br>2.GPU :图层渲染，纹理合成<br>3.把结果放到帧缓冲区(frame buffer )中<br>4.再由视频控制器根据vsync（垂直同步）信号在指定时间之前去提取帧缓冲区的屏幕显示内容<br>5.显示到屏幕上</p>
@@ -228,11 +223,12 @@
 <p>一般遇到性能问题时，考虑以下问题：<br>是否受到CPU或者GPU的限制？<br>是否有不必要的CPU渲染？<br>是否有太多的离屏渲染操作？<br>是否有太多的图层混合操作？<br>是否有奇怪的图片格式或者尺寸？<br>是否涉及到昂贵的view或者效果？<br>view的层次结构是否合理？  </p>
 <p>六、UI绘制原理</p>
 <p>异步绘制：</p>
-<p>[self.layer.delegate displayLayer: ]<br>代理负责生成对应的bitmap<br>设置该bitmap作为该layer.contents属性的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.layer.delegate displayLayer: ]</span><br></pre></td></tr></table></figure>
+<p>代理负责生成对应的bitmap<br>设置该bitmap作为该layer.contents属性的值</p>
 <p>七、离屏渲染</p>
 <p>On-Screen Rendering:当前屏幕渲染，指的是GPU的渲染操作是在当前用于显示的屏幕缓冲区中进行<br>Off-Screen Rendering:离屏渲染，分为CPU离屏渲染和GPU离屏渲染两种形式。GPU离屏渲染指的是GPU在当前屏幕缓冲区外新开辟一个缓冲区进行渲染操作<br>应当尽量避免的则是GPU离屏渲染</p>
 <p>GPU离屏渲染何时会触发呢？</p>
-<p>圆角（当和maskToBounds一起使用时）、图层蒙版、阴影，设置<br>layer.shouldRasterize ＝ YES</p>
+<p>圆角（当和maskToBounds一起使用时）、图层蒙版、阴影，设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">layer.shouldRasterize ＝ YES</span><br></pre></td></tr></table></figure></p>
 <p>为什么要避免GPU离屏渲染？</p>
 <p>GPU需要做额外的渲染操作。通常GPU在做渲染的时候是很快的，但是涉及到offscreen-render的时候情况就可能有些不同，因为需要额外开辟一个新的缓冲区进行渲染，然后绘制到当前屏幕的过程需要做onscreen跟offscreen上下文之间的切换，这个过程的消耗会比较昂贵，涉及到OpenGL的pipeline跟barrier，而且offscreen-render在每一帧都会涉及到，因此处理不当肯定会对性能产生一定的影响。另外由于离屏渲染会增加GPU的工作量，可能会导致CPU+GPU的处理时间超出16.7ms，导致掉帧卡顿。所以可以的话应尽量减少offscreen-render的图层</p>
 
