@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Hash算法及应用 | BoBo&#39;Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言哈希(Hash)或者说散列表，它是一种基础数据结构。Hash 表是一种特殊的数据结构，它同数组、链表以及二叉排序树等相比较有很明显的区别，但它又是是数组和链表的基础上演化而来，既具有数组的有点，又具有链表的特点。能够快速定位到想要查找的记录，而不是与表中存在的记录的关键字进行比较来进行查找。应用了函数映射的思想将记录的存储位置与记录的关键字关联起来，从而能够很快速地进行查找。 一、Hash设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hash算法及应用">
+<meta property="og:url" content="http://www.boboios.cn/2019/02/23/Hash%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="BoBo&#39;Blog">
+<meta property="og:description" content="前言哈希(Hash)或者说散列表，它是一种基础数据结构。Hash 表是一种特殊的数据结构，它同数组、链表以及二叉排序树等相比较有很明显的区别，但它又是是数组和链表的基础上演化而来，既具有数组的有点，又具有链表的特点。能够快速定位到想要查找的记录，而不是与表中存在的记录的关键字进行比较来进行查找。应用了函数映射的思想将记录的存储位置与记录的关键字关联起来，从而能够很快速地进行查找。 一、Hash设计">
+<meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash1.png">
+<meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash2.png">
+<meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash3.png">
+<meta property="article:published_time" content="2019-02-23T11:38:52.000Z">
+<meta property="article:modified_time" content="2020-05-14T08:06:47.201Z">
+<meta property="article:author" content="Lv Bo">
+<meta property="article:tag" content="iOS知识及原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="BoBo&#39;Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/IMG_1199.JPG" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Lv Bo</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Your name my heart</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/BoBoMoon" title="github">github</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/app%E5%AE%89%E5%85%A8/" style="font-size: 10px;">app安全</a> <a href="/tags/iOS%E6%8A%80%E5%B7%A7/" style="font-size: 20px;">iOS技巧</a> <a href="/tags/iOS%E7%9F%A5%E8%AF%86%E5%8F%8A%E5%8E%9F%E7%90%86/" style="font-size: 15px;">iOS知识及原理</a> <a href="/tags/%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80/" style="font-size: 10px;">其他语言</a> <a href="/tags/%E5%91%A8%E8%BE%B9%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">周边软件</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%95%88%E7%8E%87/" style="font-size: 10px;">开发效率</a> <a href="/tags/%E8%A3%85%E9%80%BC%E4%B8%93%E7%94%A8/" style="font-size: 10px;">装逼专用</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">莫疑春归无觅处，静待花开会有时</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Lv Bo</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/IMG_1199.JPG" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Lv Bo</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Your name my heart</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/BoBoMoon" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Hash算法及应用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/23/Hash%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/" class="article-date">
+  	<time datetime="2019-02-23T11:38:52.000Z" itemprop="datePublished">2019-02-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hash算法及应用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS%E7%9F%A5%E8%AF%86%E5%8F%8A%E5%8E%9F%E7%90%86/" rel="tag">iOS知识及原理</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>哈希(Hash)或者说散列表，它是一种基础数据结构。Hash 表是一种特殊的数据结构，它同数组、链表以及二叉排序树等相比较有很明显的区别，但它又是是数组和链表的基础上演化而来，既具有数组的有点，又具有链表的特点。能够快速定位到想要查找的记录，而不是与表中存在的记录的关键字进行比较来进行查找。应用了函数映射的思想将记录的存储位置与记录的关键字关联起来，从而能够很快速地进行查找。</p>
+<h1 id="一、Hash设计思想"><a href="#一、Hash设计思想" class="headerlink" title="一、Hash设计思想"></a>一、Hash设计思想</h1><p>试想如果我们对一个数组进行查询，这个数组里，每一个元素都是一个字符串。我们知道数组最快的检索办法是通过数组的下标进行检索，但是对于这种场景，我们无能为力，只能从头查到尾，从而查询出目标元素。<br><a id="more"></a></p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zhangsan</td>
+<td>lisi</td>
+<td>wanger</td>
+<td>wangwu</td>
+<td>zhangsi</td>
+<td>gaofei</td>
+</tr>
+</tbody>
+</table>
+<p>如果我们要根据名字找到其中的任何一个元素，就需要遍历整个数组。最坏情况下时间复杂度是O(n) ,但是借助 Hash 可以将时间复杂度降为O(1)。</p>
+<p>Hash表采用一个映射函数 f :key —&gt; address 将关键字映射到该记录在表中的存储位置，从而在想要查找该记录时，可以直接根据关键字和映射关系计算出该记录在表中的存储位置，通常情况下，这种映射关系称作为Hash函数，而通过Hash函数和关键字计算出来的存储位置（<strong>注意这里的存储位置只是表中的存储位置，并不是实际的物理地址</strong>）称作为Hash地址。比如上述例子中，假如联系人信息采用Hash表存储，则当想要找到 “lisi” 的信息时，直接根据 “lisi” 和 Hash 函数计算出 Hash 地址即可。</p>
+<p>哈希算法历史悠久，业界著名的哈希算法也有很多，比如 MD5、SHA。哈希算法是指将任意长度的二进制值串映射为固定长度的二进制值串，这个映射的规则就是哈希算法，而通过原始数据映射之后得到的二进制值串就是哈希值。有以下几个特点：</p>
+<ul>
+<li>从哈希值不能反向推导出原始数据（所以哈希算法也叫单向哈希算法或单向散列函数)。</li>
+<li>对输入数据非常敏感，哪怕原始数据只修改了一个 Bit，最后得到的哈希值也大不相同。</li>
+<li>散列冲突的概率要很小，对于不同的原始数据，哈希值相同的概率非常小。</li>
+<li>哈希算法的执行效率要尽量高效，针对较长的文本，也能快速地计算出哈希值。</li>
+</ul>
+<p>为了更好说明这种设计思想，笔者先设计出一种最笨的 Hash 函数，将所有字符串中的字符转化为数字后相加。</p>
+<table>
+<thead>
+<tr>
+<th>858</th>
+<th>433</th>
+<th>644</th>
+<th>665</th>
+<th>756</th>
+<th>619</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zhangsan</td>
+<td>lisi</td>
+<td>wanger</td>
+<td>wangwu</td>
+<td>zhangsi</td>
+<td>gaofei</td>
+</tr>
+</tbody>
+</table>
+<p>上表中数组的下标就是字符串对应的数字值。根据对应的数字值，我们就能轻易找到任何想要的对象，时间复杂度为O(1)。</p>
+<h1 id="二、Hash函数设计"><a href="#二、Hash函数设计" class="headerlink" title="二、Hash函数设计"></a>二、Hash函数设计</h1><p>所谓的 hash 算法就是将字符串转换为数字的算法。通常有以下几种构造 Hash 函数的方法：</p>
+<h2 id="2-1-直接定址法"><a href="#2-1-直接定址法" class="headerlink" title="2.1 直接定址法"></a>2.1 直接定址法</h2><p>取关键字或者关键字的某个线性函数为 Hash 地址，即<code>address(key) = a * key + b</code>; 如知道学生的学号从2000开始，最大为4000，则可以将<code>address(key)=key-2000</code>(其中a = 1)作为Hash地址。</p>
+<h2 id="2-2-平方取中法"><a href="#2-2-平方取中法" class="headerlink" title="2.2 平方取中法"></a>2.2 平方取中法</h2><p>对关键字进行平方计算，取结果的中间几位作为 Hash 地址。如有以下关键字序列 {421，423，436} ，平方之后的结果为 {177241，178929，190096} ，那么可以取中间的两位数 {72，89，00} 作为 Hash 地址。</p>
+<h2 id="2-3-折叠法"><a href="#2-3-折叠法" class="headerlink" title="2.3 折叠法"></a>2.3 折叠法</h2><p>将关键字拆分成几部分，然后将这几部分组合在一起，以特定的方式进行转化形成Hash地址。如图书的 ISBN 号为 8903-241-23，可以将 address(key)=89+03+24+12+3 作为 Hash 地址。</p>
+<h2 id="2-4-除留取余法"><a href="#2-4-除留取余法" class="headerlink" title="2.4 除留取余法"></a>2.4 除留取余法</h2><p>如果知道 Hash 表的最大长度为 m，可以取不大于m的最大质数 p，然后对关键字进行取余运算，<code>address(key)=key % p</code>。这里 <code>p</code> 的选取非常关键，<code>p</code> 选择的好的话，能够最大程度地减少冲突，<code>p</code> 一般取不大于m的最大质数。</p>
+<h1 id="三、Hash表大小的确定"><a href="#三、Hash表大小的确定" class="headerlink" title="三、Hash表大小的确定"></a>三、Hash表大小的确定</h1><p>Hash 表的空间如果远远大于实际存储的记录数据的个数，则造成空间浪费；如果过小，则容易造成冲突。Hash 表大小确定通常有这两种思路：</p>
+<ul>
+<li>如果最初知道存储的数据量，则需要根据<strong>存储个数</strong> 和 <strong>关键字的分布特点</strong>来确定 Hash 表的大小。</li>
+<li>事先不知道最终需要存储的记录个数，需要动态维护Hash表的容量，此时可能需要重新计算 Hash 地址。</li>
+</ul>
+<h1 id="四、Hash-冲突及解决方案"><a href="#四、Hash-冲突及解决方案" class="headerlink" title="四、Hash 冲突及解决方案"></a>四、Hash 冲突及解决方案</h1><h2 id="4-1-Hash冲突产生"><a href="#4-1-Hash冲突产生" class="headerlink" title="4.1 Hash冲突产生"></a>4.1 Hash冲突产生</h2><p>有这样一个问题：因为我们是用数组大小对哈希值进行取模，有可能不同键值所得到的索引值相同，这里就是冲突。如在最初的实例中，如果多出了<code>sizhang</code>这样一个元素，那么就存在两个 756。</p>
+<table>
+<thead>
+<tr>
+<th>858</th>
+<th>433</th>
+<th>644</th>
+<th>665</th>
+<th>756</th>
+<th>619</th>
+<th>756</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zhangsan</td>
+<td>lisi</td>
+<td>wanger</td>
+<td>wangwu</td>
+<td>zhangsi</td>
+<td>gaofei</td>
+<td>sizhang</td>
+</tr>
+</tbody>
+</table>
+<p>显然出现的这种情况是不合理的，解决该冲突的方法就是改变数据结构。我们将数组内的元素改变为一个链表，这样就能容下足够多的元素了，冲突问题也能得到解决。具体如何解决请看下面的<code>链地址法</code>。</p>
+<h2 id="4-2-Hash-冲突解决"><a href="#4-2-Hash-冲突解决" class="headerlink" title="4.2 Hash 冲突解决"></a>4.2 Hash 冲突解决</h2><h3 id="4-2-1-开放定址法"><a href="#4-2-1-开放定址法" class="headerlink" title="4.2.1 开放定址法"></a>4.2.1 开放定址法</h3><p>发生冲突时，使用某种探测技术在 Hash 表中形成一个探测序列，然后沿着这个探测序列依次查找下去，当碰到一个空的单元时，则插入其中。比较常用的探测方法有<code>线性探测法</code>，如有一组关键字{12，13，25，23，38，34，6，84，91}，Hash 表长为14，Hash 函数为 <code>address(key) = key % 11</code>，当插入12，13，25时可以直接插入，而当插入 23 时，地址 1 被占用了（因为 12%11 和 23%11 的结果相同）。此时沿着地址 1 依次往下探测(探测步长可以根据情况而定)，直到探测到地址4，发现为空，则将 23 插入其中。</p>
+<h3 id="4-2-2-链地址法"><a href="#4-2-2-链地址法" class="headerlink" title="4.2.2 链地址法"></a>4.2.2 链地址法</h3><p>采用数组和链表相结合的数据结构，将 Hash 地址相同的记录存储在一张线性表中，而每张表的表头的序号即为计算得到的Hash地址。如下图最左边是数组结构，数组内的元素为链表结构。</p>
+<p><img src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash1.png" alt="image"></p>
+<p>所以针对之案例冲突的解决方案如下：<br><img src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash2.png" alt="image2"><br>检索的时候可以这样检索，首先找到gaofei后，之后再遍历链表，找到feigao了。同理对于 sizhang 的冲突也是如此解决。</p>
+<h1 id="五、Hash-表的用处以及优劣"><a href="#五、Hash-表的用处以及优劣" class="headerlink" title="五、Hash 表的用处以及优劣"></a>五、Hash 表的用处以及优劣</h1><h2 id="5-1-Hash-表的实际应用"><a href="#5-1-Hash-表的实际应用" class="headerlink" title="5.1 Hash 表的实际应用"></a>5.1 Hash 表的实际应用</h2><p>上述说了这么多关于 Hash 表的知识点，但是 Hash 表在代码的世界中，实际上又有什么应用场景，可能有些读者会一头雾水，这里笔者就以简单的三个例子来说明 Hash 表的实际应用场景。</p>
+<blockquote>
+<ul>
+<li>1 、找出两文件找出重复的元素<br>假设有两个文件，文件中均包含一些短字符串，字符串个数分别为n。它们是有重复的字符串，现在需要找出所有重复的字符串。<br>最笨的解决办法可能是：遍历文件 1 中的每个元素，取出每一个元素分别去文件 2 中进行查找，这样的时间复杂度为O（n^2）。<br>但是借助 Hash 表可以有一种相对巧妙的方法，分别遍历文件 1 中的元素和文件 2 中的元素，然后放入 Hash Table 中，对于遍历的每一个元素我们只要简单的做一下计数处理即可。最后遍历整个 Hash 列表，找出所有个数大于 1 的元素即为重复的元素。</li>
+<li>2、找出两文件找出出现次数最多的元素<br>同<code>找出两文件找出重复的元素</code>这样的问题解决方案类似，只是在最后遍历的时找计数最大的元素，即为出现次数最多的元素。</li>
+<li>3、路由算法<br>多线程处理数据的场景下，通常需要将一个数据集分给不同的线程进行处理，同时要保证，相同的元素需要分到相同的处理线程上。这<br>其实这个就是一个很典型的 Hash 值应用场景，对于很多的计算引擎默认都是用 Hash 算法去解决这个问题。因为相同元素的 Hash 值相同，那么我们可以取 Hash 之后进行模运算，运算结果分配到不同的线程。</li>
+</ul>
+</blockquote>
+<p><img src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash3.png" alt="image3"></p>
+<h2 id="5-2-Hash-表的优缺点及注意点"><a href="#5-2-Hash-表的优缺点及注意点" class="headerlink" title="5.2 Hash 表的优缺点及注意点"></a>5.2 Hash 表的优缺点及注意点</h2><ul>
+<li><strong>优点</strong><br>  哈希表的效率非常高，查找、插入、删除操作只需要接近常量的时间即0(1）的时间级。如果需要在一秒种内查找上千条记录通常使用哈希表，哈希表的速度明显比树快，树的操作通常需要O(N)的时间级。哈希表不仅速度快，编程实现也相对容易。如果不需要遍历数据，不二的选择。</li>
+<li><strong>缺点</strong><br>  它是基于数组的，数组创建后难于扩展。有些情况下，哈希表被基本填满时，性能下降得非常严重，所以开发者必须要清楚表中将要存储的数据量。或者也可以定期地把数据转移到更大的哈希表中，不过这个过程耗时相对比较大。</li>
+<li><strong>注意点</strong><br>  在设计Hash算法的时候。一定要保证相同字符串产生的 Hash 值相同，同时要尽量的减小Hash冲突的发生，这样才算是好的 hash 算法。</li>
+</ul>
+<h1 id="六、Hash-在-iOS-中的应用"><a href="#六、Hash-在-iOS-中的应用" class="headerlink" title="六、Hash 在 iOS 中的应用"></a>六、Hash 在 iOS 中的应用</h1><p>这一部分的篇幅可能稍稍有点大，笔者原本打算给这一部分抽出来单独写一篇文章，但是发现没有 Hash 概念做铺垫，文章略显空洞，所以这里干脆把所有东西整合到一起，请读者耐下心来看。</p>
+<p>这一部分的内容就以下面的一个问题为中心。并在此问题上不断的扩充，以点带面。</p>
+<blockquote>
+<p>iOS系统API给我们提供一个自动过滤重复元素的容器 NSMutableSet/NSSet，如：当我们向该实例对象中添加字符串时，如果重复添加两个相同的字符串，集合中只会保留一个。NSMutableSet/NSSet内部一些实现机制要比我们自己写的滤重方法效率高。但是对于自定义一个类如Person，如果想利用NSMutableSet/NSSet来过滤重复元素（如多个Person实例的uid相同），我们必须要同时实现<code>- (BOOL)isEqual:</code>和<code>- (NSUInteger)hash</code>这两个方法。这里先简单介绍他们的关系：<code>两个相等的实例，他们的hash值一定相等。但是hash值相等的两个实例，不一定相等</code>。重点来了，利用 NSMutableSet/NSSet 具体如何实现过滤 Person 重复元素 ？</p>
+</blockquote>
+<p>在解决这个问题之前我先用简单的篇幅 6.1 小结 和 6.2 小结 分别介绍<code>- (BOOL)isEqual:</code>和<code>- (NSUInteger)hash</code>这两个方法。<a href="https://www.jianshu.com/p/915356e280fc#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89isEqual%E6%96%B9%E6%B3%95?" target="_blank" rel="noopener">具体可以参考这篇文章</a>。</p>
+<h2 id="6-1-关于-BOOL-isEqual-方法"><a href="#6-1-关于-BOOL-isEqual-方法" class="headerlink" title="6.1 关于- (BOOL)isEqual:方法"></a>6.1 关于<code>- (BOOL)isEqual:</code>方法</h2><ul>
+<li><p><strong>为什么要有<code>isEqual</code>方法？</strong><br>  OC 中 == 运算符只是简单地判断是否是同一个对象, 而 isEqual 方法可以判断对象是否相同。</p>
+</li>
+<li><p><strong>如何重写<code>isEqual</code>方法？</strong><br>  但对于自定义类型来说, 做判等时通常需要重写isEqual方法。</p>
+</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSDate</span> *birthday;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)isEqual:(<span class="keyword">id</span>)object &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == object) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (![object isKindOfClass:[Person <span class="keyword">class</span>]]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> isEqualToPerson:(Person *)object];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)isEqualToPerson:(Person *)person &#123;</span><br><span class="line">    <span class="keyword">if</span> (!person) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">BOOL</span> haveEqualNames = (!<span class="keyword">self</span>.name &amp;&amp; !person.name) || [<span class="keyword">self</span>.name isEqualToString:person.name];</span><br><span class="line">    <span class="built_in">BOOL</span> haveEqualBirthdays = (!<span class="keyword">self</span>.birthday &amp;&amp; !person.birthday) || [<span class="keyword">self</span>.birthday isEqualToDate:person.birthday];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> haveEqualNames &amp;&amp; haveEqualBirthdays;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码主要步骤如下:<br>1、 ==运算符判断是否是同一对象, 因为同一对象必然完全相同<br>2、 判断是否是同一类型, 这样不仅可以提高判等的效率, 还可以避免隐式类型转换带来的潜在风险<br>3、通过封装的isEqualToPerson方法, 提高代码复用性<br>4、 判断person是否是nil, 做参数有效性检查<br>5、 对各个属性分别使用默认判等方法进行判断<br>6、 返回所有属性判等的与结果</p>
+<h3 id="6-2-关于-NSUInteger-hash方法"><a href="#6-2-关于-NSUInteger-hash方法" class="headerlink" title="6.2 关于- (NSUInteger)hash方法"></a>6.2 关于<code>- (NSUInteger)hash</code>方法</h3><ul>
+<li><p><strong>hash方法什么时候被调用?</strong><br>  如果在 Person 类中重写<code>- (NSUInteger)hash</code>方法，该方法只在 Person 实例对象被添加至NSSet或将Person实例对象设置为NSDictionary的 key 时会调用。<strong>注意是设置为 key 而不是 value</strong></p>
+</li>
+<li><p><strong>hash方法和判等的关系？</strong><br>  为了优化判等的效率, 基于 hash 的 NSSet 和 NSDictionary 在判断成员是否相等时, 通常会这样做:<br>  <code>首先判断 hash 值是否和目标 hash 值相等。如果相同再进行对象之后的判等逻辑, 作为判等的结果； 如果不等, 直接判断为不相等。</code><br>  简单地说:<code>hash值是对象判等的必要非充分条件。</code></p>
+</li>
+<li><p><strong>如何重写 hash 方法？</strong><br>  很多人在iOS开发中, 都是这么重写hash方法的，如果自己亲自测试一下会发现直接重写父类方法并不能实现过滤重复元素的功能。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)<span class="built_in">hash</span> &#123;</span><br><span class="line">    <span class="built_in">return</span> [super <span class="built_in">hash</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于上面的 Person 类正确的 Hash 实现方法应该是借助位运算。代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)<span class="built_in">hash</span> &#123;</span><br><span class="line">    <span class="built_in">return</span> [self.name <span class="built_in">hash</span>] ^ [self.birthday <span class="built_in">hash</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-3-同时实现-BOOL-isEqual-和-NSUInteger-hash方法，实现过滤自定义实例的功能"><a href="#6-3-同时实现-BOOL-isEqual-和-NSUInteger-hash方法，实现过滤自定义实例的功能" class="headerlink" title="6.3 同时实现- (BOOL)isEqual: 和 - (NSUInteger)hash方法，实现过滤自定义实例的功能"></a>6.3 同时实现<code>- (BOOL)isEqual:</code> 和 <code>- (NSUInteger)hash</code>方法，实现过滤自定义实例的功能</h3><h4 id="6-3-1-代码实现"><a href="#6-3-1-代码实现" class="headerlink" title="6.3.1 代码实现"></a>6.3.1 代码实现</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="built_in">NSInteger</span> uid;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithID:(<span class="built_in">NSInteger</span>)uid name:(<span class="built_in">NSString</span> *)name&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</span><br><span class="line">        <span class="keyword">self</span>.uid = uid;</span><br><span class="line">        <span class="keyword">self</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)isEqual:(Person *)object&#123;</span><br><span class="line">    <span class="built_in">BOOL</span> result;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> == object) &#123;</span><br><span class="line">        result = <span class="literal">YES</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (object.uid == <span class="keyword">self</span>.uid) &#123;</span><br><span class="line">            result = <span class="literal">YES</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            result = <span class="literal">NO</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@ compare with %@ result = %@"</span>,<span class="keyword">self</span>,object,result ? <span class="string">@"Equal"</span>:<span class="string">@"NO Equal"</span>);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSString</span> *)description&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%p(%ld,%@)"</span>,<span class="keyword">self</span>,<span class="keyword">self</span>.uid,<span class="keyword">self</span>.name];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSUInteger</span>)hash&#123;</span><br><span class="line">    <span class="built_in">NSUInteger</span> hashValue = <span class="keyword">self</span>.uid; <span class="comment">//在这里只需要比较uid就行。这</span></span><br><span class="line">    样的话就满足如果两个实例相等，那么他们的 hash 一定相等，但反过</span><br><span class="line">    来hash值相等，那么两个实例不一定相等。但是在 Person 这个实例</span><br><span class="line">    中，hash值相等那么实例一定相等。（不考虑继承之类的）</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"hash = %lu,addressValue = %lu,address = %p"</span>,(<span class="built_in">NSUInteger</span>)hashValue,(<span class="built_in">NSUInteger</span>)<span class="keyword">self</span>,<span class="keyword">self</span>);</span><br><span class="line">    <span class="keyword">return</span> hashValue;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//调用重写hash后的方法</span></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="keyword">self</span>.mutSet = [<span class="built_in">NSMutableSet</span> set];</span><br><span class="line">    Person *person1 = [[Person alloc] initWithID:<span class="number">1</span> name:<span class="string">@"nihao"</span>];</span><br><span class="line">    Person *person2 = [[Person alloc] initWithID:<span class="number">2</span> name:<span class="string">@"nihao2"</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"begin add %@"</span>,person1);</span><br><span class="line">    [<span class="keyword">self</span>.mutSet addObject:person1];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"after add %@"</span>,person1);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"begin add %@"</span>,person2);</span><br><span class="line">    [<span class="keyword">self</span>.mutSet addObject:person2];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"after add %@"</span>,person2);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"count = %d"</span>,<span class="keyword">self</span>.mutSet.count);</span><br><span class="line"></span><br><span class="line">    Person *person3 = [[Person alloc] initWithID:<span class="number">1</span> name:<span class="string">@"nihao"</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"begin add %@"</span>,person3);</span><br><span class="line">    [<span class="keyword">self</span>.mutSet addObject:person3];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"after add %@"</span>,person3);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"count = %d"</span>,<span class="keyword">self</span>.mutSet.count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="6-3-2-关于一些结论"><a href="#6-3-2-关于一些结论" class="headerlink" title="6.3.2 关于一些结论"></a>6.3.2 关于一些结论</h4><ul>
+<li><p>NSMutableSet/NSSet中添加 Person 对象的时候，就会调用<code>- (NSUInteger)hash</code>方法。</p>
+</li>
+<li><p>NSMutableSet/NSSet中添加 personA 对象的时候，如果NSMutableSet/NSSet 中之前就已经存在 personB对象，且 personB 对象的 <code>- (NSUInteger)hash</code>返回值和personA的<code>- (NSUInteger)hash</code>返回值相等, 则 personA 会继续调用<code>- (BOOL)isEqual:</code>方法 ，其中此方法以personB为参数；否则不等, 继续下一个元素判断。</p>
+</li>
+<li><p>具体的判等过程如下。<br>  1、如果 personB 的<code>- (NSUInteger)hash</code>返回值是否和 personA 的<code>- (NSUInteger)hash</code>返回值相等,则直接执行第 3 步；如果不相等，则执行第 2 步。<br>  2、判断 NSMutableSet/NSSet 中是否存在下一个没有比较过的元素，如果有继续执行第 1 步；如果没有，则personA 会被添加到NSMutableSet/NSSet 集合中，执行结束命令。<br>  3、调用 personA 的<code>- (BOOL)isEqual:</code>其中该方法 以personB为参数，如果返回结果为 NO(两者不相等)， 则执行第 2 步；如果返回结果为Yes(两者是相同元素)，则 NSMutableSet/NSSet 中存在和 personA 相同的元素，personA不会被添加到集合中，直接执行结束命令。</p>
+</li>
+</ul>
+<h1 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h1><p>本文章主要讲解了 Hash 的设计思想、Hash 函数设计、Hash 冲突的产生和解决、 Hash 的优缺点以及应用，最后结合实际代码，说明了 Hash 在 iOS 判等过程中的实际应用。关于 Hash 实际上还有很多值得我们研究的问题，就单单是 Hash 函数设计而言，就足够我们花上很多功夫去研究，当然感兴趣的同学可以去仔细研究下。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/08/14/Flutter%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95MacOS/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Flutter安装踩坑记录MacOS
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/23/Runtime%E7%9B%B8%E5%85%B3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Runtime相关</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Hash算法及应用" data-title="Hash算法及应用" data-url="http://www.boboios.cn/2019/02/23/Hash%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"lvboios"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left”>
+    		&copy; 2020 Lv Bo
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
