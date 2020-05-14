@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash2.png">
 <meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/hash3.png">
 <meta property="article:published_time" content="2019-02-23T11:38:52.000Z">
-<meta property="article:modified_time" content="2020-05-14T08:06:47.201Z">
+<meta property="article:modified_time" content="2020-05-14T08:08:34.231Z">
 <meta property="article:author" content="Lv Bo">
 <meta property="article:tag" content="iOS知识及原理">
 <meta name="twitter:card" content="summary">
@@ -209,7 +209,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>哈希(Hash)或者说散列表，它是一种基础数据结构。Hash 表是一种特殊的数据结构，它同数组、链表以及二叉排序树等相比较有很明显的区别，但它又是是数组和链表的基础上演化而来，既具有数组的有点，又具有链表的特点。能够快速定位到想要查找的记录，而不是与表中存在的记录的关键字进行比较来进行查找。应用了函数映射的思想将记录的存储位置与记录的关键字关联起来，从而能够很快速地进行查找。</p>
-<h1 id="一、Hash设计思想"><a href="#一、Hash设计思想" class="headerlink" title="一、Hash设计思想"></a>一、Hash设计思想</h1><p>试想如果我们对一个数组进行查询，这个数组里，每一个元素都是一个字符串。我们知道数组最快的检索办法是通过数组的下标进行检索，但是对于这种场景，我们无能为力，只能从头查到尾，从而查询出目标元素。<br><a id="more"></a></p>
+<h1 id="一、Hash设计思想"><a href="#一、Hash设计思想" class="headerlink" title="一、Hash设计思想"></a>一、Hash设计思想</h1><p>试想如果我们对一个数组进行查询，这个数组里，每一个元素都是一个字符串。我们知道数组最快的检索办法是通过数组的下标进行检索，但是对于这种场景，我们无能为力，只能从头查到尾，从而查询出目标元素。</p>
 <table>
 <thead>
 <tr>
@@ -232,6 +232,7 @@
 </tr>
 </tbody>
 </table>
+<a id="more"></a>
 <p>如果我们要根据名字找到其中的任何一个元素，就需要遍历整个数组。最坏情况下时间复杂度是O(n) ,但是借助 Hash 可以将时间复杂度降为O(1)。</p>
 <p>Hash表采用一个映射函数 f :key —&gt; address 将关键字映射到该记录在表中的存储位置，从而在想要查找该记录时，可以直接根据关键字和映射关系计算出该记录在表中的存储位置，通常情况下，这种映射关系称作为Hash函数，而通过Hash函数和关键字计算出来的存储位置（<strong>注意这里的存储位置只是表中的存储位置，并不是实际的物理地址</strong>）称作为Hash地址。比如上述例子中，假如联系人信息采用Hash表存储，则当想要找到 “lisi” 的信息时，直接根据 “lisi” 和 Hash 函数计算出 Hash 地址即可。</p>
 <p>哈希算法历史悠久，业界著名的哈希算法也有很多，比如 MD5、SHA。哈希算法是指将任意长度的二进制值串映射为固定长度的二进制值串，这个映射的规则就是哈希算法，而通过原始数据映射之后得到的二进制值串就是哈希值。有以下几个特点：</p>
