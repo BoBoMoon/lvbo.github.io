@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="BoBo&#39;Blog">
 <meta property="og:description" content="1、二分查找假设要在电话簿中找一个名字以K打头的人，可以从头开始翻页，直到进入以K打头的部分。但你很可能不这样做， 而是从中间开始，因为你知道以K打头的名字在电话簿中间。又假设要在字典中找一个以O打头的单词，你也将从中间附近开始。 现在假设你登录Facebook。当你这样做时，Facebook必须核实你是否有其网站的账户，因此必须在其数据库中查找你的用户名。如果你的用户 名为karlmageddo">
 <meta property="article:published_time" content="2019-03-05T15:17:57.000Z">
-<meta property="article:modified_time" content="2020-11-05T16:11:25.899Z">
+<meta property="article:modified_time" content="2020-11-05T16:19:14.510Z">
 <meta property="article:author" content="Lv Bo">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -205,7 +205,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="1、二分查找"><a href="#1、二分查找" class="headerlink" title="1、二分查找"></a>1、二分查找</h4><p>假设要在电话簿中找一个名字以K打头的人，可以从头开始翻页，直到进入以K打头的部分。但你很可能不这样做， 而是从中间开始，因为你知道以K打头的名字在电话簿中间。又假设要在字典中找一个以O打头的单词，你也将从中间附近开始。</p>
-<p>现在假设你登录Facebook。当你这样做时，Facebook必须核实你是否有其网站的账户，因此必须在其数据库中查找你的用户名。如果你的用户 名为karlmageddon，Facebook可从以A打头的部分开始查找，但更合乎 逻辑的做法是从中间开始查找。<br>这是一个查找问题，在前述所有情况下，都可使用同一种算法来解决问 题，这种算法就是二分查找。</p>
+<p>现在假设你登录Facebook。当你这样做时，Facebook必须核实你是否有其网站的账户，因此必须在其数据库中查找你的用户名。如果你的用户 名为karlmageddon，Facebook可从以A打头的部分开始查找，但更合乎 逻辑的做法是从中间开始查找。<br>这是一个查找问题，在前述所有情况下，都可使用同一种算法来解决问 题，这种算法就是二分查找。<a id="more"></a></p>
 <p>二分查找是一种算法，其输入是一个<strong>有序的</strong>元素列表。如果要查找的元素包含在列表中，二分查找返回其位置; 否则返回null。</p>
 <p>下面的示例说明了二分查找的工作原理。我随便想一个1~100的数字。<br>你的目标是以最少的次数猜到这个数字。你每次猜测后，我会说小了、 大了或对了。<br>假设你从1开始依次往上猜，这是简单查找 ，更准确的说法是傻找。每次猜测都只能排除一个数字。如果我想的数字是99，你得猜99次才能猜到!</p>
 <h4 id="2、更佳的查找方式"><a href="#2、更佳的查找方式" class="headerlink" title="2、更佳的查找方式"></a>2、更佳的查找方式</h4><p>下面是一种更佳的猜法。从50开始。<br>小了，但排除了一半的数字!至此，你知道1~50都小了。接下来，你猜75。大了，那余下的数字又排除了一半!使用二分查找时，你猜测的是中间 的数字，从而每次都将余下的数字排除一半。接下来，你猜63(50和75 中间的数字)。</p>
