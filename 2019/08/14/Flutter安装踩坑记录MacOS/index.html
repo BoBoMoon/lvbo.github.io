@@ -14,17 +14,17 @@
 <meta property="og:url" content="http://www.boboios.cn/2019/08/14/Flutter%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95MacOS/index.html">
 <meta property="og:site_name" content="BoBo&#39;Blog">
 <meta property="og:description" content="一、安装安装可以直接用命令，也可以去官网下载1、打开终端执行命令git clone -b beta https:&#x2F;&#x2F;github.com&#x2F;flutter&#x2F;flutter.git2、去官网https:&#x2F;&#x2F;flutterchina.club&#x2F;setup-macos 直接下载安装我这里直接去官网下载的，然后解压缩到指定路径 二、配置环境变量1、打开或创建.bash_profile在终端Home目录ope">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/17975986-d4b55ba4bf2249e3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/17975986-3f1bc2d200998040.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/17975986-e8282afe7096b77f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/17975986-ca4148e6171767ba.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/lCNG67.jpg">
+<meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/KxyRF6.jpg">
+<meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/CCwK0i.jpg">
+<meta property="og:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/pTWAin.jpg">
 <meta property="article:published_time" content="2019-08-14T03:09:10.000Z">
-<meta property="article:modified_time" content="2020-11-05T16:19:11.988Z">
+<meta property="article:modified_time" content="2021-04-06T07:27:47.139Z">
 <meta property="article:author" content="Lv Bo">
 <meta property="article:tag" content="其他语言">
 <meta property="article:tag" content="Flutter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/17975986-d4b55ba4bf2249e3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="https://gitee.com/lvboios/PictureBed/raw/master/uPic/lCNG67.jpg">
   
     <link rel="alternative" href="/atom.xml" title="BoBo&#39;Blog" type="application/atom+xml">
   
@@ -170,13 +170,13 @@
 <p><strong>注意2：官网上的步骤，这里有两个注释<code>//国内用户需要设置</code>，把这两句中文删了，我在这里被坑了半天，一直没配置成功</strong></p>
 <p>然后运行<code>source .bash_profile</code></p>
 <p>这里我用了zsh，不成功，所以还需要配置zsh。操作为<code>vi ~/.zshrc</code>,将 source .bash_profile 加入到文件末尾，:wq。然后<code>source ~/.zshrc</code>。之后运行<code>source .bash_profile</code>环境变量可以生效了。在任意目录输入<code>flutter -v</code>,能执行则成功。</p>
-<h1 id="三、检测配置项"><a href="#三、检测配置项" class="headerlink" title="三、检测配置项"></a>三、检测配置项</h1><p>终端输入 <code>flutter doctor</code>,根据提示错误安装和执行响应操作。<br>1、安装android studio成功后，打开，  <code>command+,</code>打开设置，在<strong>Plugins</strong>里搜索flutter,安装。我开始搜不出来，直接点show all，首页就能看到。<img src="https://upload-images.jianshu.io/upload_images/17975986-d4b55ba4bf2249e3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android_studio_flutter.jpg"><br>2、安装vscode，插件市场搜索flutter，安装。<br>3、安装Xcode，不赘述。<br>4、终端运行<code>flutter doctor</code>遇到下面错误，忘了截图，网上找了别人的：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/17975986-3f1bc2d200998040.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flutter_error1.jpg"><br>根据提示运行 <code>flutter doctor --android-licenses</code>,一直y结束。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/17975986-e8282afe7096b77f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flutter_error2.jpg"></p>
+<h1 id="三、检测配置项"><a href="#三、检测配置项" class="headerlink" title="三、检测配置项"></a>三、检测配置项</h1><p>终端输入 <code>flutter doctor</code>,根据提示错误安装和执行响应操作。<br>1、安装android studio成功后，打开，  <code>command+,</code>打开设置，在<strong>Plugins</strong>里搜索flutter,安装。我开始搜不出来，直接点show all，首页就能看到。<img src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/lCNG67.jpg" alt="Android_studio.jpg"><br>2、安装vscode，插件市场搜索flutter，安装。<br>3、安装Xcode，不赘述。<br>4、终端运行<code>flutter doctor</code>遇到下面错误，忘了截图，网上找了别人的：</p>
+<p><img src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/KxyRF6.jpg" alt="flutter_error1.jpg"><br>根据提示运行 <code>flutter doctor --android-licenses</code>,一直y结束。</p>
+<p><img src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/CCwK0i.jpg" alt="flutter_error2.jpg"></p>
 <p>根据提示的brew指令，一个一个执行。</p>
 <figure class="highlight plain"><figcaption><span>install --HEAD libimobiledevice```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;brew install ideviceinstaller</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><figcaption><span>install ios-deploy```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">再运行&#96;&#96;&#96;flutter doctor</span><br></pre></td></tr></table></figure>
-<p><img src="https://upload-images.jianshu.io/upload_images/17975986-ca4148e6171767ba.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flutter_success.jpg"></p>
+<p><img src="https://gitee.com/lvboios/PictureBed/raw/master/uPic/pTWAin.jpg" alt="flutter_success.jpg"></p>
 <p>成功。</p>
 
       
@@ -385,15 +385,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS知识及原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">其他语言</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS知识及原理</a>
               </li>
              
               <li class="article-tag-list-item">
