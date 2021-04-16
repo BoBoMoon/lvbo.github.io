@@ -6,14 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.boboios.cn">
-  <title>BoBo&#39;Blog</title>
+  <title>Git原理及应用 | BoBo&#39;Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="BoBo&#39;Blog">
-<meta property="og:url" content="http://www.boboios.cn/page/2/index.html">
+  <meta name="description" content="不喜欢 merge 的分叉？用 rebase 吧有些人不喜欢 merge，因为在 merge 之后，commit 历史就会出现分叉，这种分叉再汇合的结构会让有些人觉得混乱而难以管理。如果你不希望 commit 历史出现分叉，可以用 rebase 来代替 merge。 rebase——在新位置重新提交rebase ，又是一个中国人看不懂的词。这个词的意思，你如果查一下的话：   哈？玩个 Git 就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git原理及应用">
+<meta property="og:url" content="http://www.boboios.cn/2021/04/13/Git%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="BoBo&#39;Blog">
+<meta property="og:description" content="不喜欢 merge 的分叉？用 rebase 吧有些人不喜欢 merge，因为在 merge 之后，commit 历史就会出现分叉，这种分叉再汇合的结构会让有些人觉得混乱而难以管理。如果你不希望 commit 历史出现分叉，可以用 rebase 来代替 merge。 rebase——在新位置重新提交rebase ，又是一个中国人看不懂的词。这个词的意思，你如果查一下的话：   哈？玩个 Git 就">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fdea7b6422ac3a?w=160&amp;h=128&amp;f=jpeg&amp;s=8608">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fdea7b6646a1f3?w=640&amp;h=454&amp;f=gif&amp;s=175263">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/30/1600abd620a8e28c?w=698&amp;h=518&amp;f=gif&amp;s=337134">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/12/2/160149e054fe485c?w=706&amp;h=456&amp;f=gif&amp;s=207406">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/12/2/16014b5a6919c0b7?w=650&amp;h=428&amp;f=gif&amp;s=173918">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/12/2/16014bc64d4337f8?w=643&amp;h=640&amp;f=jpeg&amp;s=58468">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fdf01882286d88?w=286&amp;h=178&amp;f=jpeg&amp;s=30022">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fdf0187ef5dbbb?w=557&amp;h=137&amp;f=jpeg&amp;s=41733">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fdf0187f2f4b2d?w=420&amp;h=370&amp;f=gif&amp;s=54907">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fde6edbfe362c4?w=600&amp;h=476&amp;f=gif&amp;s=627308">
+<meta property="article:published_time" content="2021-04-13T03:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-16T09:09:19.726Z">
 <meta property="article:author" content="Lv Bo">
+<meta property="article:tag" content="iOS技巧">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fdea7b6422ac3a?w=160&amp;h=128&amp;f=jpeg&amp;s=8608">
   
     <link rel="alternative" href="/atom.xml" title="BoBo&#39;Blog" type="application/atom+xml">
   
@@ -131,372 +147,93 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-修改项目内某个控件的全局属性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Git原理及应用" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/13/%E4%BF%AE%E6%94%B9%E9%A1%B9%E7%9B%AE%E5%86%85%E6%9F%90%E4%B8%AA%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%85%A8%E5%B1%80%E5%B1%9E%E6%80%A7/">修改项目内某个控件的全局属性</a>
+    <h1 class="article-title" itemprop="name">
+      Git原理及应用
     </h1>
   
 
         
-        <a href="/2019/02/13/%E4%BF%AE%E6%94%B9%E9%A1%B9%E7%9B%AE%E5%86%85%E6%9F%90%E4%B8%AA%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%85%A8%E5%B1%80%E5%B1%9E%E6%80%A7/" class="archive-article-date">
-  	<time datetime="2019-02-13T06:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-13</time>
+        <a href="/2021/04/13/Git%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2021-04-13T03:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>iOS5及其以后提供了一个比较强大的工具UIAppearance，我们通过UIAppearance设置一些UI的全局效果，这样就可以很方便的实现UI的自定义效果又能最简单的实现统一界面风格，它提供如下两个方法。</p>
-<ul>
-<li>(id)appearance</li>
-</ul>
-<p>这个方法是统一全部改，比如你设置UINavBar的tintColor，你可以这样写：[[UINavigationBar appearance] setTintColor:myColor];</p>
-<ul>
-<li>(id)appearanceWhenContainedIn:(Class &lt;&gt;)ContainerClass,…
-        
-          <a class="article-more-a" href="/2019/02/13/%E4%BF%AE%E6%94%B9%E9%A1%B9%E7%9B%AE%E5%86%85%E6%9F%90%E4%B8%AA%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%85%A8%E5%B1%80%E5%B1%9E%E6%80%A7/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS技巧</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/13/%E4%BF%AE%E6%94%B9%E9%A1%B9%E7%9B%AE%E5%86%85%E6%9F%90%E4%B8%AA%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%85%A8%E5%B1%80%E5%B1%9E%E6%80%A7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-效率提升--代码仓库" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/21/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87--%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93/">效率提升--代码仓库</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/21/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87--%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93/" class="archive-article-date">
-  	<time datetime="2016-06-21T07:42:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>开发过程中经常遇到重复或者相似代码，如何能更有效率的使用这些代码，xcode的做法是提供代码仓库来保存我们经常使用的代码块。</p>
-<p>操作也很简单，鼠标长按选中代码块，2秒左右鼠标变成黑色箭头后拖动至右下角代码仓库,右键edit编辑对应的快捷名称。</p>
-<p>如图：<br><img src="http://7xkrmk.com1.z0.glb.clouddn.com/2016-06-21%20%E4%B8%8B%E5%8D%884.07.02.png" alt="p1"></p>
-<p>title：代码块名称</p>
-<p>summary：简介</p>
-<p>completion shortcut :调用快捷短语</p>
-<h5 id="另外若是想生成代码模板，内含一些可变参数，可以在参数位置用-lt-name-gt-修饰，name可根据情况自取"><a href="#另外若是想生成代码模板，内含一些可变参数，可以在参数位置用-lt-name-gt-修饰，name可根据情况自取" class="headerlink" title="另外若是想生成代码模板，内含一些可变参数，可以在参数位置用&lt;#name#&gt;修饰，name可根据情况自取"></a>另外若是想生成代码模板，内含一些可变参数，可以在参数位置用&lt;#name#&gt;修饰，name可根据情况自取</h5><h4 id="自己定义的code-snippet配置文件默认放在-Library-Developer-Xcode-UserData-CodeSnippets-如果在不同的机子上开发-要把这个目录下的文件拷走复制。"><a href="#自己定义的code-snippet配置文件默认放在-Library-Developer-Xcode-UserData-CodeSnippets-如果在不同的机子上开发-要把这个目录下的文件拷走复制。" class="headerlink" title="自己定义的code snippet配置文件默认放在~/Library/Developer/Xcode/UserData/CodeSnippets/如果在不同的机子上开发,要把这个目录下的文件拷走复制。"></a>自己定义的code snippet配置文件默认放在<code>~/Library/Developer/Xcode/UserData/CodeSnippets/</code>如果在不同的机子上开发,要把这个目录下的文件拷走复制。</h4>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS技巧</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发效率</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/21/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87--%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS代码混淆" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/21/iOS%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/">iOS代码混淆</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/21/iOS%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/" class="archive-article-date">
-  	<time datetime="2016-06-21T02:23:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="代码混淆常规思路"><a href="#代码混淆常规思路" class="headerlink" title="代码混淆常规思路"></a>代码混淆常规思路</h3><ol>
-<li>化代码花指令，即随意往程序中加入迷惑人的代码指令</li>
-<li>易读字符替换</li>
+        <h1 id="不喜欢-merge-的分叉？用-rebase-吧"><a href="#不喜欢-merge-的分叉？用-rebase-吧" class="headerlink" title="不喜欢 merge 的分叉？用 rebase 吧"></a>不喜欢 merge 的分叉？用 rebase 吧</h1><p>有些人不喜欢 <code>merge</code>，因为在 <code>merge</code> 之后，<code>commit</code> 历史就会出现分叉，这种分叉再汇合的结构会让有些人觉得混乱而难以管理。如果你不希望 <code>commit</code> 历史出现分叉，可以用 <code>rebase</code> 来代替 <code>merge</code>。</p>
+<h2 id="rebase——在新位置重新提交"><a href="#rebase——在新位置重新提交" class="headerlink" title="rebase——在新位置重新提交"></a>rebase——在新位置重新提交</h2><p><code>rebase</code> ，又是一个中国人看不懂的词。这个词的意思，你如果查一下的话：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/21/15fdea7b6422ac3a?w=160&amp;h=128&amp;f=jpeg&amp;s=8608" alt=""></p>
+<blockquote>
+<p>哈？玩个 Git 就弯了？</p>
+</blockquote>
+<p>其实这个翻译还是比较准确的。<code>rebase</code> 的意思是，给你的 <code>commit</code> 序列重新设置基础点（也就是父 <code>commit</code>）。展开来说就是，把你指定的 <code>commit</code> 以及它所在的 <code>commit</code> 串，以指定的目标 <code>commit</code> 为基础，依次重新提交一次。例如下面这个 <code>merge</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge branch1</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/21/15fdea7b6646a1f3?w=640&amp;h=454&amp;f=gif&amp;s=175263" alt=""></p>
+<p>如果把 <code>merge</code> 换成 <code>rebase</code>，可以这样操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout branch1</span><br><span class="line">git rebase master</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/30/1600abd620a8e28c?w=698&amp;h=518&amp;f=gif&amp;s=337134" alt=""></p>
+<a id="more"></a>可以看出，通过 <code>rebase</code>，<code>5</code> 和 <code>6</code> 两条 <code>commit</code>s 把基础点从 <code>2</code> 换成了 <code>4</code> 。通过这样的方式，就让本来分叉了的提交历史重新回到了一条线。这种「重新设置基础点」的操作，就是 <code>rebase</code> 的含义。<br><br>另外，在 <code>rebase</code> 之后，记得切回 <code>master</code> 再 <code>merge</code> 一下，把 <code>master</code> 移到最新的 <code>commit</code>：<br><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge branch1</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2017/12/2/160149e054fe485c?w=706&amp;h=456&amp;f=gif&amp;s=207406" alt=""></p>
+<blockquote>
+<p>为什么要从 <code>branch1</code> 来 <code>rebase</code>，然后再切回 <code>master</code> 再 <code>merge</code> 一下这么麻烦，而不是直接在 <code>master</code> 上执行 <code>rebase</code>？</p>
+<p>从图中可以看出，<code>rebase</code> 后的 <code>commit</code> 虽然内容和 <code>rebase</code> 之前相同，但它们已经是不同的 <code>commits</code> 了。如果直接从 <code>master</code> 执行 <code>rebase</code> 的话，就会是下面这样：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/12/2/16014b5a6919c0b7?w=650&amp;h=428&amp;f=gif&amp;s=173918" alt=""></p>
+<p>这就导致 <code>master</code> 上之前的两个最新 <code>commit</code> 被剔除了。如果这两个 <code>commit</code> 之前已经在中央仓库存在，这就会导致没法 <code>push</code> 了：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/12/2/16014bc64d4337f8?w=643&amp;h=640&amp;f=jpeg&amp;s=58468" alt=""></p>
+<p>所以，为了避免和远端仓库发生冲突，一般不要从 <code>master</code> 向其他 <code>branch</code> 执行 <code>rebase</code> 操作。而如果是 <code>master</code> 以外的 <code>branch</code> 之间的 <code>rebase</code>（比如 <code>branch1</code> 和 <code>branch2</code> 之间），就不必这么多费一步，直接 <code>rebase</code> 就好。</p>
+</blockquote>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本节介绍的是 <code>rebase</code> 指令，它可以改变 <code>commit</code> 序列的基础点。它的使用方式很简单：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase 目标基础点</span><br></pre></td></tr></table></figure>
+<p>需要说明的是，<code>rebase</code> 是站在需要被 <code>rebase</code> 的 <code>commit</code> 上进行操作，这点和 <code>merge</code> 是不同的。</p>
+<h1 id="刚刚提交的代码，发现写错了怎么办？"><a href="#刚刚提交的代码，发现写错了怎么办？" class="headerlink" title="刚刚提交的代码，发现写错了怎么办？"></a>刚刚提交的代码，发现写错了怎么办？</h1><p>刚提交了一个代码，发现有几个字写错了：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/21/15fdf01882286d88?w=286&amp;h=178&amp;f=jpeg&amp;s=30022" alt=""></p>
+<p>怎么修复？</p>
+<p>当场再写一个修复这几个错别字的 <code>commit</code>？可以是可以，不过还有一个更加优雅和简单的解决方法：<code>commit -—amend</code>。</p>
+<p>“amend” 是「修正」的意思。在提交时，如果加上 <code>--amend</code> 参数，Git 不会在当前 <code>commit</code> 上增加 <code>commit</code>，而是会把当前 <code>commit</code> 里的内容和暂存区（stageing area）里的内容合并起来后创建一个新的 <code>commit</code>，<strong>用这个新的 <code>commit</code> 把当前 <code>commit</code> 替换掉</strong>。所以 <code>commit --amend</code> 做的事就是它的字面意思：对最新一条 <code>commit</code> 进行修正。</p>
+<p>具体地，对于上面这个错误，你就可以把文件中的错别字修改好之后，输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add 笑声.txt</span><br><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/21/15fdf0187ef5dbbb?w=557&amp;h=137&amp;f=jpeg&amp;s=41733" alt=""></p>
+<p>Git 会把你带到提交信息编辑界面。可以看到，提交信息默认是当前提交的提交信息。你可以修改或者保留它，然后保存退出。然后，你的最新 <code>commit</code> 就被更新了。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/21/15fdf0187f2f4b2d?w=420&amp;h=370&amp;f=gif&amp;s=54907" alt=""></p>
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p>这一节的内容只有一点：用 <code>commit --amend</code> 可以修复当前提交的错误。使用方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+<p>需要注意的有一点：<code>commit --amend</code> 并不是直接修改原 <code>commit</code> 的内容，而是生成一条新的 <code>commit</code>。</p>
+<h1 id="sourcetree重置提交，回滚提交，代码回滚，重置到这次提交"><a href="#sourcetree重置提交，回滚提交，代码回滚，重置到这次提交" class="headerlink" title="sourcetree重置提交，回滚提交，代码回滚，重置到这次提交"></a>sourcetree重置提交，回滚提交，代码回滚，重置到这次提交</h1><p><a href="https://www.jianshu.com/p/95ac86fe593f" target="_blank" rel="noopener">https://www.jianshu.com/p/95ac86fe593f</a></p>
+<h1 id="紧急情况：「立即给我打个包，现在马上！」"><a href="#紧急情况：「立即给我打个包，现在马上！」" class="headerlink" title="紧急情况：「立即给我打个包，现在马上！」"></a>紧急情况：「立即给我打个包，现在马上！」</h1><p>前面在讲 <code>branch</code> 的时候讲到，利用 <code>branch</code> 可以实现一人多任务的需求，从而可以轻松应对「嘿，这个先别做了，给你个新活」的情况。但有时，尤其是在互联网公司，你可能会遇到比这更紧急的情况：你正对着电脑发呆，忽然见到一个同事屁股着着火就跑来找你了：「快快快，立即给我打个包，现在马上，拜托拜托！」</p>
+<p>这种情况和「这个 <code>branch</code> 先放放吧」不同，你没时间、也没必要当场慌慌张张把文件的所有改动做个临时的 <code>commit</code> 然后去救同事的火，救完火再重新把 <code>commit</code> 撤销回来。这时候你只要先把所有文件一股脑扔在一边就可以去给同事打包了，打完包再把刚才扔到一边的文件重新取过来就好。</p>
+<p>这一「扔」一「取」，用的是 Git 的 <code>stash</code> 指令。</p>
+<h1 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h1><h1 id="Feature-Branching：最流行的工作流"><a href="#Feature-Branching：最流行的工作流" class="headerlink" title="Feature Branching：最流行的工作流"></a>Feature Branching：最流行的工作流</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>这种工作流的核心内容可以总结为两点：</p>
+<ol>
+<li>任何新的功能（feature）或 bug 修复全都新建一个 <code>branch</code> 来写；</li>
+<li><code>branch</code> 写完后，合并到 <code>master</code>，然后删掉这个 <code>branch</code>。</li>
 </ol>
-<h3 id="OC的方法名混淆"><a href="#OC的方法名混淆" class="headerlink" title="OC的方法名混淆"></a>OC的方法名混淆</h3><h4 id="混淆时机："><a href="#混淆时机：" class="headerlink" title="混淆时机："></a>混淆时机：</h4><p>我们希望在开发时一直保留清晰可读的程序代码，方便自己。同时希望编译出来的二进制包含乱七八糟的混淆后的程序代码，恶心他人。因此我们可以在<code>Build Phrase</code>中设定在编译之前进行方法名的字符串替换。</p>
-<h4 id="混淆的方法："><a href="#混淆的方法：" class="headerlink" title="混淆的方法："></a>混淆的方法：</h4><p>方法名混淆其实就是字符串替换，利用#define，把混淆结果合并在一个.h中，在工程prefix.pch的最前面#import这个.h。不导入也可以编译，导入则实现混淆。</p>
-        
-          <a class="article-more-a" href="/2016/06/21/iOS%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS技巧</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">app安全</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/21/iOS%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iPhone与mac屏幕共享" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/15/iPhone%E4%B8%8Emac%E5%B1%8F%E5%B9%95%E5%85%B1%E4%BA%AB/">iPhone与mac屏幕共享</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/15/iPhone%E4%B8%8Emac%E5%B1%8F%E5%B9%95%E5%85%B1%E4%BA%AB/" class="archive-article-date">
-  	<time datetime="2016-06-15T07:59:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>有时候开会或者技术分享时，需要演示手机内容，站起来拿着手机给大家看一圈显然不嗨森。下面几款软件可以满足需求：</p>
-<h3 id="使用苹果自带软件QuickTime-Player"><a href="#使用苹果自带软件QuickTime-Player" class="headerlink" title="使用苹果自带软件QuickTime Player"></a>使用苹果自带软件<code>QuickTime Player</code></h3><ul>
-<li>用数据线将mac电脑和iPhone连接，然后在应用程序中打开QuickTimePlayer</li>
-<li>在顶部菜单栏中点击:文件–&gt;新建影片录制</li>
-<li>出现显示框后，点击红色按钮旁边的下拉箭头，出现下拉框后选择你的手机即可</li>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/21/15fde6edbfe362c4?w=600&amp;h=476&amp;f=gif&amp;s=627308" alt="Feature Branching"></p>
+<p>这就是这种工作流最基本的模型。</p>
+<p>从上面的动图来看，这种工作流似乎没什么特别之处。但实质上，Feature Branching 这种工作流，为团队开发时两个关键的问题——代码分享和一人多任务——提供了解决方案。</p>
+<h1 id="Git-flow"><a href="#Git-flow" class="headerlink" title="Git flow"></a>Git flow</h1><p>首先，项目存在两个长期分支。</p>
+<ul>
+<li>主分支master</li>
+<li>开发分支develop</li>
 </ul>
-        
-          <a class="article-more-a" href="/2016/06/15/iPhone%E4%B8%8Emac%E5%B1%8F%E5%B9%95%E5%85%B1%E4%BA%AB/#more">more >></a>
-        
-      
+<p>前者用于存放对外发布的版本，任何时候在这个分支拿到的，都是稳定的分布版；后者用于日常开发，存放最新的开发版。</p>
+<p>其次，项目存在三种短期分支。</p>
+<ul>
+<li>功能分支（feature branch）</li>
+<li>补丁分支（hotfix branch）</li>
+<li>预发分支（release branch）</li>
+</ul>
+<p>一旦完成开发，它们就会被合并进develop或master，然后被删除。</p>
+<p>git规范：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/66048537" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/66048537</a><br><a href="http://www.ruanyifeng.com/blog/2012/07/git.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2012/07/git.html</a></p>
+<p>分支管理策略<br><a href="http://www.ruanyifeng.com/blog/2012/07/git.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2012/07/git.html</a></p>
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">周边软件</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">装逼专用</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/15/iPhone%E4%B8%8Emac%E5%B1%8F%E5%B9%95%E5%85%B1%E4%BA%AB/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-控件属性可视化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/14/%E6%8E%A7%E4%BB%B6%E5%B1%9E%E6%80%A7%E5%8F%AF%E8%A7%86%E5%8C%96/">控件属性可视化</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/14/%E6%8E%A7%E4%BB%B6%E5%B1%9E%E6%80%A7%E5%8F%AF%E8%A7%86%E5%8C%96/" class="archive-article-date">
-  	<time datetime="2016-06-14T03:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>平时在设计控件样式的时候，比如设置控件的拐角圆弧，用代码编写如下：</p>
-<p><code>UIImageView *imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 50)];</code></p>
-<p><code>imgView.layer.cornerRadius = 5;</code></p>
-<p><code>imgView.clipsToBounds = YES;</code></p>
-<hr>
-<p>但这并不能直观的看到最终样式效果，我们希望能像宽高背景颜色等等一样能在xib中直接看到，方法并不复杂：
-        
-          <a class="article-more-a" href="/2016/06/14/%E6%8E%A7%E4%BB%B6%E5%B1%9E%E6%80%A7%E5%8F%AF%E8%A7%86%E5%8C%96/#more">more >></a>
-        
       
 
       
@@ -518,16 +255,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/06/14/%E6%8E%A7%E4%BB%B6%E5%B1%9E%E6%80%A7%E5%8F%AF%E8%A7%86%E5%8C%96/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.boboios.cn/2021/04/13/Git%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/04/16/%E7%A7%81%E6%9C%89%E5%BA%93%E4%BE%9D%E8%B5%96%E9%9D%99%E6%80%81%E5%BA%93%E5%88%B6%E4%BD%9C%E6%96%B9%E6%A1%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          私有库依赖静态库制作方案
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/14/Flutter%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95MacOS/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flutter安装踩坑记录MacOS</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -547,12 +352,14 @@
 
 
 
+  
+  
+  
 
   
+
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+
   
 
 
@@ -575,8 +382,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
